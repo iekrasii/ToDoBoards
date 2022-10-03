@@ -18,6 +18,7 @@ namespace ToDoBoards.Storage
 
         internal DbSet<ToDo> ToDos { get; set; }
         internal DbSet<Board> Boards { get; set; }
+        internal DbSet<RateLimit> RateLimits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,9 @@ namespace ToDoBoards.Storage
             modelBuilder.Entity<ToDo>().HasOne(x => x.Board)
                 .WithMany(x => x.ToDos);
 
+            modelBuilder.Entity<RateLimit>().HasKey(x => x.Id);
+            modelBuilder.Entity<RateLimit>().HasIndex(x => x.ApiPath);
+            
             base.OnModelCreating(modelBuilder);
         }
     }

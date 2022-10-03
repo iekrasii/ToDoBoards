@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ToDoBoards.Api.Features.RequestRateLimit;
 using ToDoBoards.Api.V1.DTOs;
 using ToDoBoards.Api.V1.Services;
 
@@ -29,6 +30,7 @@ public class BoardsController : ControllerBase
     /// <param name="cancellationToken">Cancellation token</param>
     /// <response code="200">Successfully responded</response>
     /// <response code="500">Unexpected server error</response>
+    [IsLimited]
     [HttpGet]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]

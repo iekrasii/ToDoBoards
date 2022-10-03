@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ToDoBoards.Api.Attributes;
+namespace ToDoBoards.Api.Features.RequestValidation;
 
 /// <summary>
 /// Validates guid empty value

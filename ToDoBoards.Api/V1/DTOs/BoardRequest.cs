@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ToDoBoards.Api.Attributes;
+using ToDoBoards.Api.Features.RequestValidation;
 
 namespace ToDoBoards.Api.V1.DTOs;
 

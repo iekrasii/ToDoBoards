@@ -18,14 +18,14 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddDbStorage(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var settings = configuration.BindSettings<DbStorage>();
+        var settings = configuration.BindSettings<StorageConfiguration>();
 
         serviceCollection.AddSingleton(op =>
         {
             {
                 var cb = new DbContextOptionsBuilder<StorageDbContext>();
-                cb = settings.InMemoryDb.Enabled
-                    ? cb.UseInMemoryDatabase(settings.InMemoryDb.Name)
+                cb = settings.InMemory.Enabled
+                    ? cb.UseInMemoryDatabase(settings.InMemory.Name)
                     : cb.UseSqlServer(settings.ConnectionString);
 
                 return cb.Options;
@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddDbContext<StorageDbContext>();
         serviceCollection.AddScoped<IBoardStorage, BoardStorage>();
         serviceCollection.AddScoped<IToDoStorage, ToDoStorage>();
+        serviceCollection.AddScoped<IRateLimitStorage, RateLimitStorage>();
         
         return serviceCollection;
     }

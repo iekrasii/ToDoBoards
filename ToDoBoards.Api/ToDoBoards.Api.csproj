@@ -16,6 +16,7 @@
   
     <ItemGroup>
         <ProjectReference Include="..\ToDoBoards.Common\ToDoBoards.Common.csproj" />
+        <ProjectReference Include="..\ToDoBoards.Notification\ToDoBoards.Notification.csproj" />
         <ProjectReference Include="..\ToDoBoards.Storage\ToDoBoards.Storage.csproj" />
     </ItemGroup>
   

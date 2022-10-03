@@ -1,7 +1,7 @@
 ﻿namespace ToDoBoards.Storage.Configuration;
 
-internal class DbStorage
+internal class StorageConfiguration
 {
     public string ConnectionString { get; set; }
-    public DbStorageInMemory InMemoryDb { get; set; }
+    public InMemoryConfiguration InMemory { get; set; }
 }

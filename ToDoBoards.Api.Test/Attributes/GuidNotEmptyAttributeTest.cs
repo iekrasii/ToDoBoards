@@ -1,5 +1,5 @@
 using System;
-using ToDoBoards.Api.Attributes;
+using ToDoBoards.Api.Features.RequestValidation;
 using Xunit;
 
 namespace ToDoBoards.Api.Test.Attributes;
