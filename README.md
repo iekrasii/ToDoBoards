@@ -1,2 +1,5 @@
 # ToDoBoards
-Simple API of todo borads
+Simple API of todo boards.
+
+Features:
+- Request Rate Limit
