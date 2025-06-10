@@ -58,6 +58,72 @@ public class ToDoStorageTest
     }
 
     [Fact]
+    public async Task GetAllToDosAsync_MultipleBoards_ReturnsOnlyRequestedBoard()
+    {
+        var board1 = new Board
+        {
+            Id = Guid.NewGuid(),
+            ToDos = new List<ToDo>
+            {
+                new ToDo { Id = Guid.NewGuid(), Title = "Board1" }
+            }
+        };
+        var board2 = new Board
+        {
+            Id = Guid.NewGuid(),
+            ToDos = new List<ToDo>
+            {
+                new ToDo { Id = Guid.NewGuid(), Title = "Board2" }
+            }
+        };
+
+        this._dbFixture.StorageDbContext.Boards.Add(board1);
+        this._dbFixture.StorageDbContext.Boards.Add(board2);
+        await this._dbFixture.StorageDbContext.SaveChangesAsync(CancellationToken.None);
+        var storage = new ToDoStorage(this._dbFixture.StorageDbContext, this._loggerMock.Object);
+
+        var todos = await storage.GetAllToDosAsync(board1.Id, CancellationToken.None);
+
+        Assert.Single(todos);
+        Assert.Equal(board1.Id, todos[0].Board.Id);
+
+        await this._dbFixture.ResetAfterTestAsync(CancellationToken.None);
+    }
+
+    [Fact]
+    public async Task GetIncompleteToDosAsync_MultipleBoards_ReturnsOnlyRequestedBoard()
+    {
+        var board1 = new Board
+        {
+            Id = Guid.NewGuid(),
+            ToDos = new List<ToDo>
+            {
+                new ToDo { Id = Guid.NewGuid(), Done = false },
+            }
+        };
+        var board2 = new Board
+        {
+            Id = Guid.NewGuid(),
+            ToDos = new List<ToDo>
+            {
+                new ToDo { Id = Guid.NewGuid(), Done = false },
+            }
+        };
+
+        this._dbFixture.StorageDbContext.Boards.Add(board1);
+        this._dbFixture.StorageDbContext.Boards.Add(board2);
+        await this._dbFixture.StorageDbContext.SaveChangesAsync(CancellationToken.None);
+        var storage = new ToDoStorage(this._dbFixture.StorageDbContext, this._loggerMock.Object);
+
+        var todos = await storage.GetIncompleteToDosAsync(board2.Id, CancellationToken.None);
+
+        Assert.Single(todos);
+        Assert.Equal(board2.Id, todos[0].Board.Id);
+
+        await this._dbFixture.ResetAfterTestAsync(CancellationToken.None);
+    }
+
+    [Fact]
     public async Task UpdateToDoAsync_SwitchBoard_BoardSwitched()
     {
         // Create 2 boards and assign ToDo task to the first board
