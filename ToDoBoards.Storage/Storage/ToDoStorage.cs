@@ -37,7 +37,9 @@ namespace ToDoBoards.Storage.Storage
         {
             try
             {
-                return this._storageDbContext.ToDos.ToArrayAsync(cancellationToken);
+                return this._storageDbContext.ToDos
+                    .Where(x => x.BoardId == boardId)
+                    .ToArrayAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -51,7 +53,8 @@ namespace ToDoBoards.Storage.Storage
         {
             try
             {
-                return this._storageDbContext.ToDos.Where(x => !x.Done)
+                return this._storageDbContext.ToDos
+                    .Where(x => !x.Done && x.BoardId == boardId)
                     .ToArrayAsync(cancellationToken);
             }
             catch (Exception ex)
